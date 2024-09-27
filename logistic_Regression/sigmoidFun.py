@@ -87,10 +87,10 @@ def load_data(file_name):
         label_data.append(label_tmp)
     f.close()
 
-    return np.mat(feature_data),np.mat(label_data)
+    return np.mat(feature_data), np.mat(label_data)
 
 
-def save_model(file_name,w):
+def save_model(file_name, w):
     """
     保存模型
     input: 文件名

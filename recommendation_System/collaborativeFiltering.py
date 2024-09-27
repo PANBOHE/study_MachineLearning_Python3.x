@@ -7,12 +7,11 @@ import numpy as np
 
 
 def cos_sim(x,y):
-    '''
-
-    :param x:  以行向量的形式存储可以使用户或者对应项
-    :param y: 以列向量的形式存储，可以使用户或者对应项
-    :return: x和y之间的余弦相似度
-    '''
+    """
+    :param x:  以行向量的形式存储可以使用户或者对应项 mat
+    :param y: 以列向量的形式存储，可以使用户或者对应项 mat
+    :return: x和y之间的余弦相似度   mat
+    """
     numerator = x*y.T  #x和y之间的额内积
     denominator = np.sqrt(x * x.T) *np.sqrt(y*y.T)
     return (numerator / denominator)[0,0]
@@ -27,10 +26,10 @@ def similarity(data):
 
     m = np.shape(data)[0]  # 用户的数量
     #初始化相似度矩阵
-    w = np.mat(np.zeros((m,m)))
+    w = np.mat(np.zeros((m, m)))
 
     for i in range(m):
-        for j in range(i,m):
+        for j in range(i, m):
             if j != i:
                 #计算任意两行之间的相似度
                 w[i,j] = cos_sim(data[i,], data[j,])
@@ -91,6 +90,7 @@ def load_data(file_path):
                 tmp.append(0)
         data.append(tmp)
     f.close()
+    return np.mat(data)
 
 
 def top_k(predict, k):

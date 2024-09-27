@@ -6,6 +6,7 @@
 
 
 import numpy as np
+from collections import defaultdict
 
 
 def load_data(file_path):
@@ -67,7 +68,7 @@ def user_based_recommend(data, w, user):
             user(int):用户的编号
     output: predict(list):推荐列表
     '''
-    m, n = np.shape(data)
+    m, n = np.shape(data)  # m 用户数 ， n 商品
     interaction = data[user,]  # 用户user与商品信息
 
     # 1、找到用户user没有互动过的商品
@@ -77,15 +78,18 @@ def user_based_recommend(data, w, user):
             not_inter.append(i)
 
     # 2、对没有互动过的商品进行预测
-    predict = {}
+    # predict = {}
+    predict = defaultdict(float)
     for x in not_inter:
         item = np.copy(data[:, x])  # 找到所有用户对商品x的互动信息
         for i in range(m):  # 对每一个用户
             if item[i, 0] != 0:  # 若该用户对商品x有过互动
-                if x not in predict:
-                    predict[x] = w[user, i] * item[i, 0]
-                else:
-                    predict[x] = predict[x] + w[user, i] * item[i, 0]
+                # if x not in predict:
+                #     predict[x] = w[user, i] * item[i, 0]
+                # else:
+                #     predict[x] = predict[x] + w[user, i] * item[i, 0]
+                predict[x] = predict[x] = w[user, i]*item[i, 0]
+
     # 3、按照预测的大小从大到小排序
     return sorted(predict.items(), key=lambda d: d[1], reverse=True)
 
